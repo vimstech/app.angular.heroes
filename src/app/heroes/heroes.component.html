@@ -1,0 +1,25 @@
+<h2>My Heroes</h2>
+
+<div>
+  <label class="create-hero">Hero name:
+    <input #heroName />
+  </label>
+  <button (click)="add(heroName.value); heroName.value=''">
+    add
+  </button>
+</div>
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes; index as i">
+    <span class="handle ui-sortable-handle">
+      <i class="fa fa-ellipsis-v"></i>
+      <i class="fa fa-ellipsis-v"></i>
+    </span>
+    <span class="text">{{hero.name}}<small>&nbsp;<i>{{abilities(hero)}}</i></small></span>
+    <div class="tools">
+      <button class="delete danger" title="delete hero"
+        (click)="delete(hero)">x</button>
+      <button class="primary" routerLink="/heroes/{{hero._id}}">view</button>
+    </div>
+  </li>
+</ul>

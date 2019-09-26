@@ -1,0 +1,104 @@
+/* HeroesComponent's private CSS styles */
+
+.heroes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 300px;
+  margin-left: 15px;
+}
+
+.heroes>li {
+  border-radius: 2px;
+  padding: 10px;
+  background: #f4f4f4;
+  margin: 5px;
+  border-left: 2px solid #e6e7e8;
+  color: #444
+}
+
+.heroes>li:last-of-type {
+  margin-bottom: 0
+}
+
+.heroes>li .text {
+  display: inline-block;
+  margin-left: 5px;
+  font-weight: 600
+}
+
+.heroes>li .label {
+  margin-left: 10px;
+  font-size: 9px
+}
+
+.heroes>li .tools {
+  display: none;
+  float: right;
+  color: #dd4b39;
+  margin-top: -5px;
+  margin-right: -5px;
+}
+
+.heroes>li .tools>.fa,.heroes>li .tools>.glyphicon,.heroes>li .tools>.ion {
+  margin-right: 5px;
+  cursor: pointer
+}
+
+.heroes>li:hover .tools {
+  display: inline-block
+}
+
+.heroes>li.done {
+  color: #999
+}
+
+.heroes>li.done .text {
+  text-decoration: line-through;
+  font-weight: 500
+}
+
+.heroes>li.done .label {
+  background: #d2d6de !important
+}
+
+.heroes .danger {
+  border-left-color: #dd4b39
+}
+
+.heroes .warning {
+  border-left-color: #f39c12
+}
+
+.heroes .info {
+  border-left-color: #00c0ef
+}
+
+.heroes .success {
+  border-left-color: #00a65a
+}
+
+.heroes .primary {
+  border-left-color: #3c8dbc
+}
+
+.heroes .handle {
+  display: inline-block;
+  cursor: move;
+  margin: 0 5px
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+label.create-hero{
+  input{
+    padding: 5px 8px;
+  }
+}
+
+label + button{
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
