@@ -18,47 +18,49 @@ export class HeroService {
     private http: HttpClient
   ) { }
 
-  getHeroes (count: number = 0): Observable<Hero[]> {
-    const params = {};
+  getHeroes(count: number = 0): Observable<Hero[]> {
+    let params: any = {};
 
     if (count > 0) {
-      params['limit'] = count;
+      params = {limit: count};
     }
-    return this.http.get<Hero[]>(this.baseUrl, { params: params }).pipe(
+    const url = this.baseUrl + '?include[abilities][only]=name&include[abilities][only]=power';
+    return this.http.get<Hero[]>(url, { params }).pipe(
       tap(_ => this.log('fetched heroes')),
       catchError(this.handleError('getHeroes', []))
     );
   }
 
-  searchHeroes (term: string): Observable<Hero[]> {
-    const params = {};
+  searchHeroes(term: string): Observable<Hero[]> {
+    let params = {};
     term = term.trim();
     if (!term) {
       return of([]);
     }
-    params['term'] = term;
-    return this.http.get<Hero[]>(this.baseUrl, { params: params }).pipe(
+    params = {term};
+    return this.http.get<Hero[]>(this.baseUrl, { params }).pipe(
       tap(_ => this.log('search heroes')),
       catchError(this.handleError('searchHeroes', []))
     );
   }
 
-  addHero (hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.baseUrl, hero).pipe(
+  addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.baseUrl, {hero}).pipe(
       tap((h: Hero) => this.log(`Create hero id=${h._id}`)),
       catchError(this.handleError<Hero>(`addHero`))
     );
   }
 
-  getHero (id: string): Observable<Hero> {
-    return this.http.get<Hero>(this.baseUrl + `/${id}`).pipe(
+  getHero(id: string): Observable<Hero> {
+    const url = this.baseUrl + `/${id}?include[abilities][only]=name&include[abilities][only]=power`;
+    return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`Fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
 
   updateHero(hero: Hero): Observable<any> {
-    return this.http.put(this.baseUrl + `/${hero._id}`, hero).pipe(
+    return this.http.put(this.baseUrl + `/${hero._id}`, {hero}).pipe(
       tap(_ => this.log(`Update hero id=${hero._id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
@@ -75,7 +77,7 @@ export class HeroService {
     this.messageService.add(message);
   }
 
-  handleError<T> (operation= 'operation', result?: T) {
+  handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.log(`${operation} failed: ${error.message}`);
       return of(result as T);

@@ -28,17 +28,19 @@ export class HeroDetailComponent implements OnInit {
     this.getHero();
   }
 
-  getHero (): void {
+  getHero(): void {
     const id = this.route.snapshot.paramMap.get('id');
 
     this.heroService.getHero(id).subscribe(hero => {
       this.hero = hero;
-      this.abilities = hero.abilities.map(a => a.name).join(', ');
+      if (hero.abilities) {
+        this.abilities = hero.abilities.map(a => a.name).join(', ');
+      }
       this.ability.hero_id = this.hero._id;
     });
   }
 
-  save () {
+  save() {
     this.heroService.updateHero(this.hero)
       .subscribe(() => this.goBack());
   }
@@ -47,8 +49,8 @@ export class HeroDetailComponent implements OnInit {
     this.location.back();
   }
 
-  add(){
-    this.abilityService.addAbility( this.hero, this.ability).subscribe(ability => {
+  add() {
+    this.abilityService.addAbility(this.hero, this.ability).subscribe(ability => {
       this.hero.abilities.push(ability);
       this.abilities = this.hero.abilities.map(a => a.name).join(', ')
       this.ability.name = ''

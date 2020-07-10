@@ -15,9 +15,9 @@ export class AbilityService {
     private http: HttpClient
   ) { }
 
-  addAbility (hero: Hero, ability: Ability): Observable<Ability> {
-    return this.http.post<Ability>(this.baseUrl.replace(':hero_id', hero._id), ability).pipe(
-      tap(_ =>  this.log(`add ability to hero=${hero._id}`)),
+  addAbility(hero: Hero, ability: Ability): Observable<Ability> {
+    return this.http.post<Ability>(this.baseUrl.replace(':hero_id', hero._id), {ability}).pipe(
+      tap(_ => this.log(`add ability to hero=${hero._id}`)),
       catchError(this.handleError<any>('addAbility'))
     );
   }
@@ -26,7 +26,7 @@ export class AbilityService {
     this.messageService.add(message);
   }
 
-  handleError<T> (operation= 'operation', result?: T) {
+  handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.log(`${operation} failed: ${error.message}`);
       return of(result as T);
